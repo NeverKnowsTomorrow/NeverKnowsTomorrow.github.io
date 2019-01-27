@@ -1948,7 +1948,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #fff130;
+  background: #60861a;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3087,13 +3087,6 @@ ul.breadcrumb li+li:last-child {
   .post-body {
     text-align: justify;
   }
-}
-body {
-  background: url("/images/background8.jpg");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: 50% 50%;
-  background-size: cover;
 }
 .post {
   margin-top: 60px;
