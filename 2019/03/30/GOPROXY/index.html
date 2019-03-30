@@ -125,7 +125,7 @@
 <meta property="og:site_name" content="NeverKnowsTomorrow">
 <meta property="og:description" content="本文转载自：https://shockerli.net/post/go-get-golang-org-x-solution/ 问题描述当我们使用 go get、go install、go mod 等命令时，会自动下载相应的包或依赖包。但由于众所周知的原因，类似于 golang.org/x/... 的包会出现下载失败的情况。如下所示：123$ go get -u golang.org/x/sysgo">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-30T05:25:28.755Z">
+<meta property="og:updated_time" content="2019-03-30T06:03:00.758Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决 go get golang.org&#x2F;x 失败">
 <meta name="twitter:description" content="本文转载自：https://shockerli.net/post/go-get-golang-org-x-solution/ 问题描述当我们使用 go get、go install、go mod 等命令时，会自动下载相应的包或依赖包。但由于众所周知的原因，类似于 golang.org/x/... 的包会出现下载失败的情况。如下所示：123$ go get -u golang.org/x/sysgo">
@@ -387,7 +387,7 @@
                 
               
 
-              <time title="创建时间：2019-03-30 12:34:20 / 修改时间：13:25:28" itemprop="dateCreated datePublished" datetime="2019-03-30T12:34:20+08:00">2019-03-30</time>
+              <time title="创建时间：2019-03-30 12:34:20 / 修改时间：14:03:00" itemprop="dateCreated datePublished" datetime="2019-03-30T12:34:20+08:00">2019-03-30</time>
             
 
             
@@ -501,6 +501,7 @@
       
         <p>本文转载自：<a href="https://shockerli.net/post/go-get-golang-org-x-solution/" target="_blank" rel="noopener">https://shockerli.net/post/go-get-golang-org-x-solution/</a></p>
 <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>当我们使用 <code>go get</code>、<code>go install</code>、<code>go mod</code> 等命令时，会自动下载相应的包或依赖包。但由于众所周知的原因，类似于 <code>golang.org/x/...</code> 的包会出现下载失败的情况。如下所示：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">go</span> get -u golang.org/x/sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">go</span> get golang.org/x/sys: unrecognized <span class="keyword">import</span> path <span class="string">"golang.org/x/sys"</span> (https fetch: Get https:<span class="comment">//golang.org/x/sys?go-get=1: dial tcp 216.239.37.1:443: i/o timeout)</span></span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h1 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h1><h2 id="手动下载"><a href="#手动下载" class="headerlink" title="手动下载"></a>手动下载</h2><p>我们常见的  <code>golang.org/x/...</code> 包，一般在 GitHub 上都有官方的镜像仓库对应。比如 <code>golang.org/x/text</code> 对应 <code>github.com/golang/text</code>。所以，我们可以手动下载或 clone 对应的 GitHub 仓库到指定的目录下。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir <span class="variable">$GOPATH</span>/src/golang.org/x</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$GOPATH</span>/src/golang.org/x</span><br><span class="line">git <span class="built_in">clone</span> git@github.com:golang/text.git</span><br><span class="line">rm -rf text/.git</span><br></pre></td></tr></table></figure>
 <p>当如果需要指定版本的时候，该方法就无解了，因为 GitHub 上的镜像仓库多数都没有 tag。并且，手动嘛，程序员怎么能干呢，尤其是依赖的依赖，太多了。</p>
