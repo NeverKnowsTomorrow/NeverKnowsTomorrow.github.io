@@ -117,26 +117,25 @@
   </script>
 
 
-  <meta name="description" content="我大概是 2013 年开始使用 OneNote 的。最初用过印象笔记，后来迁移到了 OneNote，至今快 6 年时间了，积累了不少笔记。一直都想搭一个博客，把笔记搬运到博客上，分享一下几年来积累的经验和知识，也可以在互联网上留下自己的痕迹。">
+  <meta name="description" content="源代码分析 实际上 HashSet 内部维护了一个 HashMap，代码如下：  123456789101112131415161718public class HashSet&amp;lt;E&amp;gt; extends AbstractSet&amp;lt;E&amp;gt; implements Set&amp;lt;E&amp;gt;, Cloneable, java.io.Serializable &amp;#123;    static">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="OneNote 笔记搬运计划">
-<meta property="og:url" content="http://yoursite.com/2019/03/28/OneNote2BlogPlan/index.html">
+<meta property="og:title" content="HashSet 保证元素唯一性的原理">
+<meta property="og:url" content="http://yoursite.com/2019/04/15/HashSet/index.html">
 <meta property="og:site_name" content="NeverKnowsTomorrow">
-<meta property="og:description" content="我大概是 2013 年开始使用 OneNote 的。最初用过印象笔记，后来迁移到了 OneNote，至今快 6 年时间了，积累了不少笔记。一直都想搭一个博客，把笔记搬运到博客上，分享一下几年来积累的经验和知识，也可以在互联网上留下自己的痕迹。">
+<meta property="og:description" content="源代码分析 实际上 HashSet 内部维护了一个 HashMap，代码如下：  123456789101112131415161718public class HashSet&amp;lt;E&amp;gt; extends AbstractSet&amp;lt;E&amp;gt; implements Set&amp;lt;E&amp;gt;, Cloneable, java.io.Serializable &amp;#123;    static">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/aea405dbly1g1iijhezynj20sg0bj0td.jpg">
-<meta property="og:updated_time" content="2019-03-30T05:32:58.435Z">
+<meta property="og:updated_time" content="2019-04-15T02:16:23.059Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="OneNote 笔记搬运计划">
-<meta name="twitter:description" content="我大概是 2013 年开始使用 OneNote 的。最初用过印象笔记，后来迁移到了 OneNote，至今快 6 年时间了，积累了不少笔记。一直都想搭一个博客，把笔记搬运到博客上，分享一下几年来积累的经验和知识，也可以在互联网上留下自己的痕迹。">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/aea405dbly1g1iijhezynj20sg0bj0td.jpg">
+<meta name="twitter:title" content="HashSet 保证元素唯一性的原理">
+<meta name="twitter:description" content="源代码分析 实际上 HashSet 内部维护了一个 HashMap，代码如下：  123456789101112131415161718public class HashSet&amp;lt;E&amp;gt; extends AbstractSet&amp;lt;E&amp;gt; implements Set&amp;lt;E&amp;gt;, Cloneable, java.io.Serializable &amp;#123;    static">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/28/OneNote2BlogPlan/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/15/HashSet/">
 
 
 
@@ -146,7 +145,7 @@
   };
 </script>
 
-  <title>OneNote 笔记搬运计划 | NeverKnowsTomorrow</title>
+  <title>HashSet 保证元素唯一性的原理 | NeverKnowsTomorrow</title>
   
 
 
@@ -345,7 +344,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/28/OneNote2BlogPlan/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/15/HashSet/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="乔少年">
@@ -362,7 +361,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">OneNote 笔记搬运计划
+          <h1 class="post-title" itemprop="name headline">HashSet 保证元素唯一性的原理
 
               
             
@@ -388,24 +387,12 @@
                 
               
 
-              <time title="创建时间：2019-03-28 07:54:31" itemprop="dateCreated datePublished" datetime="2019-03-28T07:54:31+08:00">2019-03-28</time>
+              <time title="创建时间：2019-04-15 09:54:33 / 修改时间：10:16:23" itemprop="dateCreated datePublished" datetime="2019-04-15T09:54:33+08:00">2019-04-15</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-30 13:32:58" itemprop="dateModified" datetime="2019-03-30T13:32:58+08:00">2019-03-30</time>
               
             
           </span>
@@ -437,8 +424,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/03/28/OneNote2BlogPlan/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/03/28/OneNote2BlogPlan/" itemprop="commentCount"></span>
+                <a href="/2019/04/15/HashSet/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/04/15/HashSet/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -446,7 +433,7 @@
 
           
           
-            <span id="/2019/03/28/OneNote2BlogPlan/" class="leancloud_visitors" data-flag-title="OneNote 笔记搬运计划">
+            <span id="/2019/04/15/HashSet/" class="leancloud_visitors" data-flag-title="HashSet 保证元素唯一性的原理">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -478,7 +465,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">511</span>
+                <span title="本文字数">3.8k</span>
               
 
               
@@ -492,7 +479,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -512,9 +499,50 @@
       
 
       
-        <p><img src="https://ws1.sinaimg.cn/large/aea405dbly1g1iijhezynj20sg0bj0td.jpg" alt=""><br>我大概是 2013 年开始使用 OneNote 的。最初用过印象笔记，后来迁移到了 OneNote，至今快 6 年时间了，积累了不少笔记。一直都想搭一个博客，把笔记搬运到博客上，分享一下几年来积累的经验和知识，也可以在互联网上留下自己的痕迹。<br> <a id="more"></a></p>
-<p>19 年 1 月份，在学校通过 Hexo + GitHub pages 搭建了第一个个人博客，为主题效果折腾了挺长时间，后来删繁就简，保留了简约的风格，毕竟作为技术博客，重要的是内容。博客搭好以后，发布的第一篇博客是我翻译的 <a href="https://neverknowstomorrow.github.io/2019/01/29/IPFS-white-paper/" target="_blank" rel="noopener">IPFS 白皮书</a>，花了接近一周的时间。后来忙其他事又把博客暂时搁置了。写博客是件挺耗费时间和精力的事，尤其是高质量的博客，必定是精心雕琢打磨之后的作品。一直都特别欣赏坚持写高质量博客的人，好的博客可以把复杂的理论讲得清晰易懂，看起来也赏心悦目，更重要的是能对自己有所启发。想写一些高质量博客，但总不愿花太多时间精力，所以就一直拖延到现在。</p>
-<p>最近看到一句话，深以为然。“人总是高估一天能做的事情，低估一年能做的事情”。所以，有意义的事情，坚持去做了，成果总会随时间积淀下来。开始写博客吧，先把 OneNote 笔记搬运计划执行起来，一年以后看看成果。</p>
+        <h3 id="源代码分析"><a href="#源代码分析" class="headerlink" title="源代码分析"></a>源代码分析</h3><ol>
+<li><p>实际上 HashSet 内部维护了一个 HashMap，代码如下：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashSet</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractSet</span>&lt;<span class="title">E</span>&gt; <span class="keyword">implements</span> <span class="title">Set</span>&lt;<span class="title">E</span>&gt;, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">5024744406713321676L</span>; </span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> HashMap&lt;E, Object&gt; map; </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Dummy value to associate with an Object in the backing Map</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object PRESENT = <span class="keyword">new</span> Object (); </span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Constructs a new, empty set; the backing &lt;tt&gt;HashMap&lt;/tt&gt; instance has</span></span><br><span class="line"><span class="comment">     * default initial capacity (16) and load factor (0.75).</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HashSet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>具体要看 HashSet 的 add（）方法是如何进行判重的，代码如下：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> map.put (e, PRESENT) == <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以看到，元素直接存在 map 里面了</li>
+<li>元素值是 map 的 key，map 的 value 则是前面提到的 PRESENT 变量，这个变量只作为放入 map 时的一个占位符而存在，所以没什么实际用处。</li>
+<li>HashSet 元素以 HashMap 的键值形式存放，因为 Map 当中键值是不可重复的，所以 HashSet 中的元素也是唯一的</li>
+</ul>
+</li>
+<li><p>HashMap 又是怎么保证 Key 是唯一的呢？我们看一下它的 put () 方法：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (table == EMPTY_TABLE) &#123;</span><br><span class="line">        inflateTable (threshold);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (key == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span> putForNullKey (value);</span><br><span class="line">    <span class="keyword">int</span> hash = hash (key);</span><br><span class="line">    <span class="keyword">int</span> i = indexFor (hash, table.length);</span><br><span class="line">    <span class="keyword">for</span> (Entry&lt;K,V&gt; e = table [i]; e != <span class="keyword">null</span>; e = e.next) &#123;</span><br><span class="line">        Object k;</span><br><span class="line">        <span class="keyword">if</span> (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals (k))) &#123;</span><br><span class="line">            V oldValue = e.value;</span><br><span class="line">            e.value = value;</span><br><span class="line">            e.recordAccess (<span class="keyword">this</span>);</span><br><span class="line">            <span class="keyword">return</span> oldValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    modCount++;</span><br><span class="line">    addEntry (hash, key, value, i);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code>代码的主要操作是：先调用对象的 hashCode () 方法得到一个哈希值，然后在集合中查找是否有哈希值相同的对象
+- 如果没有哈希值相同的对象，就直接存入集合
+- 如果有哈希值相同的对象，就和哈希值相同的对象逐个进行 equals () 比较，比较结果为 false 就存入对象，为 true 则不存 key，仅更新 value
+</code></pre><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>1. HashSet 原理 </strong></p>
+<ul>
+<li>我们使用 Set 集合都是需要去掉重复元素的，如果在存储的时候逐个使用 equals () 方法进行比较，效率很低。HashSet 底层是一个哈希表，不同的元素哈希值一般是不相同的，元素按照不同的哈希值进行存储，这样可以减少元素比较的次数，降低了使用 equals () 方法的次数</li>
+<li>当 HashSet 调用 add () 方法存储对象的时候，先调用对象的 hashCode () 方法得到一个哈希值，然后在集合中查找是否有哈希值相同的对象</li>
+<li>如果没有哈希值相同的对象就直接存入集合</li>
+<li>如果有哈希值相同的对象，就和哈希值相同的对象逐个进行 equals () 比较，比较结果为 false 就存入，true 则不存</li>
+</ul>
+<p><strong>2. 将自定义类的对象存入 HashSet 去重复 </strong></p>
+<p>类中必须重写 hashCode () 和 equals () 方法</p>
+<ul>
+<li>hashCode (): 属性相同的对象返回值必须相同，属性不同的返回值尽量不同（提高效率）</li>
+<li>equals (): 属性相同返回 true, 属性不同返回 false, 返回 false 的时候存储（注意存储自定义对象去重时必须同时重写 hashCode () 和 equals () 方法，因为 equals 方法默认是按照对象地址值比较的）</li>
+</ul>
+<h3 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String [] args)</span> </span>&#123;</span><br><span class="line">    Person p1 = <span class="keyword">new</span> Person (<span class="string">"Bob"</span>, <span class="number">20</span>);</span><br><span class="line">    Person p2 = <span class="keyword">new</span> Person (<span class="string">"Bob"</span>, <span class="number">20</span>);</span><br><span class="line">    Person p3 = <span class="keyword">new</span> Person (<span class="string">"Alice"</span>, <span class="number">21</span>);</span><br><span class="line">    Person p4 = <span class="keyword">new</span> Person (<span class="string">"Mike"</span>, <span class="number">22</span>);</span><br><span class="line"> </span><br><span class="line">    Set&lt;Person&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">    set.add (p1);</span><br><span class="line">    set.add (p2);</span><br><span class="line">    set.add (p3);</span><br><span class="line">    set.add (p4);</span><br><span class="line"> </span><br><span class="line">    System.out.println (set.size ());</span><br><span class="line">    System.out.println (set);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码中 p1 和 p2 内容完全相同，但实际上它们是不同的对象，它们的默认的哈希值是不同的，所以 HashSet 会直接将 p1 和 p2 存进集合。这不满足我们集合去重的目的，所以需要重写 Person 类的 hashCode () 方法，使得 p1 和 p2 的哈希值相同，进而能够调用 equals () 方法进行进一步的比较。</p>
+<p>在使用默认的 equals () 方法进行判断时，是按照对象的地址值比较的，如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">this</span> == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>显然 p1 和 p2 的地址不同，判断结果是 false，这两个元素仍然可以一起存入集合，还是没有达到集合去重的目的。因此 equals () 方法也需要进行重写。</p>
+<p>可以使用 IDE 自动重写 hashCode () 和 equals () 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> == o) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (o == <span class="keyword">null</span> || getClass () != o.getClass ()) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    Person person = (Person) o;</span><br><span class="line">    <span class="keyword">return</span> age == person.age &amp;&amp;</span><br><span class="line">            Objects.equals (name, person.name);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Objects.hash (name, age);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重写之后的 hashCode () 方法，对象内容完全一致的形况下，得到的哈希值也是一致的。</li>
+<li>重写之后的 equals () 方法，对象内容完全一致的形况下，返回的结果是 true。</li>
+</ul>
+<p>所以，HashSet 添加 p1 和 p2 时，因为其内容完全一致，所以哈希值也相同，进而调用 equals () 方法，得到返回结果 true，所以两个内容相同的元素只能存入一个，达到了集合去重的目的。</p>
 
       
     </div>
@@ -557,7 +585,7 @@
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     
-    <a href="http://yoursite.com/2019/03/28/OneNote2BlogPlan/" title="OneNote 笔记搬运计划">http://yoursite.com/2019/03/28/OneNote2BlogPlan/</a>
+    <a href="http://yoursite.com/2019/04/15/HashSet/" title="HashSet 保证元素唯一性的原理">http://yoursite.com/2019/04/15/HashSet/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -567,6 +595,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
       
 
       
@@ -597,8 +631,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/26/OCR-tool/" rel="next" title="推荐一款截图 OCR 软件">
-                <i class="fa fa-chevron-left"></i> 推荐一款截图 OCR 软件
+              <a href="/2019/04/08/Token2Shell/" rel="next" title="win10 UWP ssh 客户端 Token2Shell/MD 简介">
+                <i class="fa fa-chevron-left"></i> win10 UWP ssh 客户端 Token2Shell/MD 简介
               </a>
             
           </div>
@@ -606,10 +640,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/30/GOPROXY/" rel="prev" title="解决 go get golang.org/x 失败">
-                解决 go get golang.org/x 失败 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -658,8 +688,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -745,6 +784,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#源代码分析"><span class="nav-number">1.</span> <span class="nav-text">源代码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码示例"><span class="nav-number">3.</span> <span class="nav-text">代码示例</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
