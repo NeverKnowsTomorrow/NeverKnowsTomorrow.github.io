@@ -125,7 +125,7 @@
 <meta property="og:site_name" content="NeverKnowsTomorrow">
 <meta property="og:description" content="源代码分析实际上 HashSet 内部维护了一个 HashMap，代码如下：123456789101112131415161718public class HashSet&amp;lt;E&amp;gt; extends AbstractSet&amp;lt;E&amp;gt; implements Set&amp;lt;E&amp;gt;, Cloneable, java.io.Serializable &amp;#123;    static fi">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-16T07:50:39.366Z">
+<meta property="og:updated_time" content="2019-04-16T14:35:45.724Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HashSet 保证元素唯一性的原理">
 <meta name="twitter:description" content="源代码分析实际上 HashSet 内部维护了一个 HashMap，代码如下：123456789101112131415161718public class HashSet&amp;lt;E&amp;gt; extends AbstractSet&amp;lt;E&amp;gt; implements Set&amp;lt;E&amp;gt;, Cloneable, java.io.Serializable &amp;#123;    static fi">
@@ -404,7 +404,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-16 15:50:39" itemprop="dateModified" datetime="2019-04-16T15:50:39+08:00">2019-04-16</time>
+                <time title="修改时间：2019-04-16 22:35:45" itemprop="dateModified" datetime="2019-04-16T22:35:45+08:00">2019-04-16</time>
               
             
           </span>
@@ -521,7 +521,7 @@
 <p>代码的主要操作是：先调用对象的 <code>hashCode ()</code> 方法得到一个哈希值，然后在集合中查找是否有哈希值相同的对象</p>
 <ul>
 <li>如果没有哈希值相同的对象，就直接存入集合</li>
-<li>如果有哈希值相同的对象，就和哈希值相同的对象逐个进行 <code>equals ()</code> 比较，比较结果为 <code>false</code> 就存入对象，为 <code>true</code> 则不存 <code>key</code>，仅更新 <code>value</code></li>
+<li>如果有哈希值相同的对象，就和哈希值相同的对象逐个进行 <code>equals ()</code> 比较，比较结果为 <code>false</code> 就存入对象，为 <code>true</code> 则不存 <code>key</code>，仅更新 <code>value</code>  </li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>1. HashSet 原理 </strong></p>
 <ul>
