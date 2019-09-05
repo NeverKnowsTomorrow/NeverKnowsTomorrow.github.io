@@ -125,7 +125,7 @@
 <meta property="og:site_name" content="NeverKnowsTomorrow">
 <meta property="og:description" content="源代码分析实际上 HashSet 内部维护了一个 HashMap，代码如下：123456789101112131415161718public class HashSet&amp;lt;E&amp;gt; extends AbstractSet&amp;lt;E&amp;gt; implements Set&amp;lt;E&amp;gt;, Cloneable, java.io.Serializable &amp;#123;    static fi">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-16T14:35:45.000Z">
+<meta property="og:updated_time" content="2019-09-05T00:58:19.575Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HashSet 保证元素唯一性的原理">
 <meta name="twitter:description" content="源代码分析实际上 HashSet 内部维护了一个 HashMap，代码如下：123456789101112131415161718public class HashSet&amp;lt;E&amp;gt; extends AbstractSet&amp;lt;E&amp;gt; implements Set&amp;lt;E&amp;gt;, Cloneable, java.io.Serializable &amp;#123;    static fi">
@@ -404,7 +404,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-16 22:35:45" itemprop="dateModified" datetime="2019-04-16T22:35:45+08:00">2019-04-16</time>
+                <time title="修改时间：2019-09-05 08:58:19" itemprop="dateModified" datetime="2019-09-05T08:58:19+08:00">2019-09-05</time>
               
             
           </span>
@@ -525,7 +525,7 @@
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>1. HashSet 原理 </strong></p>
 <ul>
-<li>我们使用 <code>Set</code> 集合都是需要去掉重复元素的，如果在存储的时候逐个使用 <code>equals ()</code> <code>方法进行比较，效率很低。HashSet</code> 底层是一个哈希表，不同的元素哈希值一般是不相同的，元素按照不同的哈希值进行存储，这样可以减少元素比较的次数，降低了使用 <code>equals ()</code> 方法的次数。</li>
+<li>我们使用 <code>Set</code> 集合都是需要去掉重复元素的，如果在存储的时候逐个使用 <code>equals ()</code> 方法进行比较，效率很低。HashSet 底层是一个哈希表，不同的元素哈希值一般是不相同的，元素按照不同的哈希值进行存储，这样可以减少元素比较的次数，降低了使用 <code>equals ()</code> 方法的次数。</li>
 <li>当 <code>HashSet</code> 调用 <code>add ()</code> 方法存储对象的时候，先调用对象的 <code>hashCode ()</code> 方法得到一个哈希值，然后在集合中查找是否有哈希值相同的对象。</li>
 <li>如果没有哈希值相同的对象就直接存入集合。</li>
 <li>如果有哈希值相同的对象，就和哈希值相同的对象逐个进行 <code>equals ()</code> 比较，比较结果为 <code>false</code> 就存入，<code>true</code> 则不存。</li>
