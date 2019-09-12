@@ -117,18 +117,18 @@
   </script>
 
 
-  <meta name="description" content="交换元素使序列有序求最少交换次数的题有两类：  第一种是  只能交换相邻元素使序列有序 ，求最小交换次数，假如是是序列升序，只需要求逆序对数。比如 {5, 1, 3, 2, 4, 7, 6, 8}，逆序的有：(5, 1)，(5, 3)，(5, 2)，(5, 4)，(3, 2)，(7, 6)，一共 6 对，最小交换次数是 6 次。1234567891011public static void get">
+  <meta name="description" content="交换元素使序列有序求最少交换次数的题有两类：  第一种是  只能交换相邻元素使序列有序 ，求最小交换次数，假如是是序列升序，只需要求逆序对数。比如 {5, 1, 3, 2, 4, 7, 6, 8}，逆序的有：(5, 1)，(5, 3)，(5, 2)，(5, 4)，(3, 2)，(7, 6)，一共 6 对，最小交换次数是 6 次。  1234567891011public static void g">
 <meta name="keywords" content="Algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="两类交换元素使序列有序，求最少交换次数的题">
 <meta property="og:url" content="http://yoursite.com/2019/09/12/array-swap-elements/index.html">
 <meta property="og:site_name" content="NeverKnowsTomorrow">
-<meta property="og:description" content="交换元素使序列有序求最少交换次数的题有两类：  第一种是  只能交换相邻元素使序列有序 ，求最小交换次数，假如是是序列升序，只需要求逆序对数。比如 {5, 1, 3, 2, 4, 7, 6, 8}，逆序的有：(5, 1)，(5, 3)，(5, 2)，(5, 4)，(3, 2)，(7, 6)，一共 6 对，最小交换次数是 6 次。1234567891011public static void get">
+<meta property="og:description" content="交换元素使序列有序求最少交换次数的题有两类：  第一种是  只能交换相邻元素使序列有序 ，求最小交换次数，假如是是序列升序，只需要求逆序对数。比如 {5, 1, 3, 2, 4, 7, 6, 8}，逆序的有：(5, 1)，(5, 3)，(5, 2)，(5, 4)，(3, 2)，(7, 6)，一共 6 对，最小交换次数是 6 次。  1234567891011public static void g">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-12T15:46:24.228Z">
+<meta property="og:updated_time" content="2019-09-12T15:48:15.476Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="两类交换元素使序列有序，求最少交换次数的题">
-<meta name="twitter:description" content="交换元素使序列有序求最少交换次数的题有两类：  第一种是  只能交换相邻元素使序列有序 ，求最小交换次数，假如是是序列升序，只需要求逆序对数。比如 {5, 1, 3, 2, 4, 7, 6, 8}，逆序的有：(5, 1)，(5, 3)，(5, 2)，(5, 4)，(3, 2)，(7, 6)，一共 6 对，最小交换次数是 6 次。1234567891011public static void get">
+<meta name="twitter:description" content="交换元素使序列有序求最少交换次数的题有两类：  第一种是  只能交换相邻元素使序列有序 ，求最小交换次数，假如是是序列升序，只需要求逆序对数。比如 {5, 1, 3, 2, 4, 7, 6, 8}，逆序的有：(5, 1)，(5, 3)，(5, 2)，(5, 4)，(3, 2)，(7, 6)，一共 6 对，最小交换次数是 6 次。  1234567891011public static void g">
 
 
 
@@ -387,7 +387,7 @@
                 
               
 
-              <time title="创建时间：2019-09-12 23:06:09 / 修改时间：23:46:24" itemprop="dateCreated datePublished" datetime="2019-09-12T23:06:09+08:00">2019-09-12</time>
+              <time title="创建时间：2019-09-12 23:06:09 / 修改时间：23:48:15" itemprop="dateCreated datePublished" datetime="2019-09-12T23:06:09+08:00">2019-09-12</time>
             
 
             
@@ -483,9 +483,9 @@
       
         <p>交换元素使序列有序求最少交换次数的题有两类：</p>
 <ol>
-<li>第一种是 <strong> 只能交换相邻元素使序列有序 </strong>，求最小交换次数，假如是是序列升序，只需要求逆序对数。比如 <code>{5, 1, 3, 2, 4, 7, 6, 8}</code>，逆序的有：<code>(5, 1)</code>，<code>(5, 3)</code>，<code>(5, 2)</code>，<code>(5, 4)</code>，<code>(3, 2)</code>，<code>(7, 6)</code>，一共 6 对，最小交换次数是 6 次。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getMinSwapCount1</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; arr.length; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr [i] &gt; arr [j]) &#123;</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println (count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>第一种是 <strong> 只能交换相邻元素使序列有序 </strong>，求最小交换次数，假如是是序列升序，只需要求逆序对数。比如 <code>{5, 1, 3, 2, 4, 7, 6, 8}</code>，逆序的有：<code>(5, 1)</code>，<code>(5, 3)</code>，<code>(5, 2)</code>，<code>(5, 4)</code>，<code>(3, 2)</code>，<code>(7, 6)</code>，一共 6 对，最小交换次数是 6 次。</li>
 </ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getMinSwapCount1</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; arr.length; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr [i] &gt; arr [j]) &#123;</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println (count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <ol>
 <li>第二种是 <strong> 可以交换任意两个位置的元素，使之有序 </strong>，求最小交换次数，答案是数字的个数减去交换数字形成的环 （置换环）的个数。比如 <code>{5, 1, 3, 2, 4, 7, 6, 8}</code>, 求将这个序列变成升序序列的最小交换次数，那么这个序列中的环有 <code>{5, 1, 2, 4}</code>, <code>{7, 6}</code>, <code>{3}, {8}</code>, 那么最小交换次数就是 <code>8 - 4 = 4</code>，求降序的最小交换次数，只需要将序列逆置，再进行求解。</li>
