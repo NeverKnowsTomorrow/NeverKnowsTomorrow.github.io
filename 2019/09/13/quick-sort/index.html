@@ -125,12 +125,12 @@
 <meta property="og:site_name" content="NeverKnowsTomorrow">
 <meta property="og:description" content="快速排序（Quick Sort）快速排序是由东尼・霍尔所发展的一种排序算法。在平均状况下，排序 n 个项目要 $O (n\log n)$ 次比较。在最坏状况下则需要 $O (n^2)$ 次比较，但这种状况并不常见。事实上，快速排序通常明显比其他 $O (n\log n)$ 算法更快，因为它的内部循环（inner loop）可以在大部分的架构上很有效率地被实现出来。 快速排序的最坏运行情况是 $O">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://i.loli.net/2019/09/13/gPs2SN9LMFxVC3e.png">
-<meta property="og:updated_time" content="2019-09-13T13:14:27.315Z">
+<meta property="og:image" content="https://i.loli.net/2019/09/13/txUNCL8VcoKieWf.gif">
+<meta property="og:updated_time" content="2019-09-13T13:21:37.796Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="快速排序的两种写法：挖坑法和交换法">
 <meta name="twitter:description" content="快速排序（Quick Sort）快速排序是由东尼・霍尔所发展的一种排序算法。在平均状况下，排序 n 个项目要 $O (n\log n)$ 次比较。在最坏状况下则需要 $O (n^2)$ 次比较，但这种状况并不常见。事实上，快速排序通常明显比其他 $O (n\log n)$ 算法更快，因为它的内部循环（inner loop）可以在大部分的架构上很有效率地被实现出来。 快速排序的最坏运行情况是 $O">
-<meta name="twitter:image" content="https://i.loli.net/2019/09/13/gPs2SN9LMFxVC3e.png">
+<meta name="twitter:image" content="https://i.loli.net/2019/09/13/txUNCL8VcoKieWf.gif">
 
 
 
@@ -389,7 +389,7 @@
                 
               
 
-              <time title="创建时间：2019-09-13 19:10:02 / 修改时间：21:14:27" itemprop="dateCreated datePublished" datetime="2019-09-13T19:10:02+08:00">2019-09-13</time>
+              <time title="创建时间：2019-09-13 19:10:02 / 修改时间：21:21:37" itemprop="dateCreated datePublished" datetime="2019-09-13T19:10:02+08:00">2019-09-13</time>
             
 
             
@@ -494,7 +494,7 @@
 <li>递归地（recursive）把小于基准值元素的子数列和大于基准值元素的子数列排序。</li>
 </ul>
 <p>递归的最底部情形，是数列的大小是零或一，也就是永远都已经被排序好了。虽然一直递归下去，但是这个算法总会退出，因为在每次的迭代（iteration）中，它至少会把一个元素摆到它最后的位置去。</p>
-<h3 id="动图演示"><a href="#动图演示" class="headerlink" title="动图演示"></a>动图演示</h3><p><img src="https://i.loli.net/2019/09/13/gPs2SN9LMFxVC3e.png" alt=""></p>
+<h3 id="动图演示"><a href="#动图演示" class="headerlink" title="动图演示"></a>动图演示</h3><p><img src="https://i.loli.net/2019/09/13/txUNCL8VcoKieWf.gif" alt=""></p>
 <p>快速排序一般有两种写法，挖坑法和交换法，两者有一点区别，但总体都是基于分治思想的，上图是交换法的动图演示。</p>
 <h4 id="挖坑法"><a href="#挖坑法" class="headerlink" title="挖坑法"></a>挖坑法</h4><p><strong> 挖坑法的思想：</strong> 用两个指针 <code>i</code> 和 <code>j</code> 分别指向数组的第一个数和最后一个数，即令 <code>i = 0</code>，<code>j = arr.length - 1</code>。选取第一个数为基准数（可以选任意一个数为基准数，习惯选第一个）<code>pivot = arr [0]</code>，首先从 <code>j</code> 所指位置自右向左逐一搜索，找到第一个小于 <code>pivot</code> 的数字，将其存入 <code>i</code> 所指的位置，并令 <code>i = i + 1</code>。然后再从 <code>i</code> 所指位置起自左向右逐一搜索，找到第一个大于 <code>pivot</code> 的数字，将其存入 <code>j</code> 所指的位置，并令 <code>j = j - 1</code>。重复上述过程，直至 <code>i == j</code> 为止，此时令 <code>arr [i] = pivot</code>，至此一次分区完成。</p>
 <p>挖坑法，顾名思义就是排序的过程要挖坑。以图中所示数组为例，取第一个数为基准数。</p>
@@ -516,7 +516,7 @@
 <th>11</th>
 <th>12</th>
 <th>13</th>
-<th>14</th>
+<th>14 </th>
 </tr>
 </thead>
 <tbody>
@@ -535,8 +535,7 @@
 <td>4</td>
 <td>19</td>
 <td>50</td>
-<td>48</td>
-<td></td>
+<td>48 </td>
 </tr>
 </tbody>
 </table>
@@ -563,7 +562,7 @@
 <th>11</th>
 <th>12</th>
 <th>13</th>
-<th>14</th>
+<th>14 </th>
 </tr>
 </thead>
 <tbody>
@@ -582,8 +581,7 @@
 <td>4</td>
 <td>19</td>
 <td>50</td>
-<td>48</td>
-<td></td>
+<td>48 </td>
 </tr>
 </tbody>
 </table>
@@ -627,8 +625,7 @@
 <td>4</td>
 <td>19</td>
 <td>50</td>
-<td>48</td>
-<td></td>
+<td>48 </td>
 </tr>
 </tbody>
 </table>
