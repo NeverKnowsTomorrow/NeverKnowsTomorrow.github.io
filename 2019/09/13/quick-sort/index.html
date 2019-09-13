@@ -126,7 +126,7 @@
 <meta property="og:description" content="快速排序（Quick Sort）快速排序是由东尼・霍尔所发展的一种排序算法。在平均状况下，排序 n 个项目要 $O (n\log n)$ 次比较。在最坏状况下则需要 $O (n^2)$ 次比较，但这种状况并不常见。事实上，快速排序通常明显比其他 $O (n\log n)$ 算法更快，因为它的内部循环（inner loop）可以在大部分的架构上很有效率地被实现出来。 快速排序的最坏运行情况是 $O">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://i.loli.net/2019/09/13/gPs2SN9LMFxVC3e.png">
-<meta property="og:updated_time" content="2019-09-13T13:11:34.782Z">
+<meta property="og:updated_time" content="2019-09-13T13:14:27.315Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="快速排序的两种写法：挖坑法和交换法">
 <meta name="twitter:description" content="快速排序（Quick Sort）快速排序是由东尼・霍尔所发展的一种排序算法。在平均状况下，排序 n 个项目要 $O (n\log n)$ 次比较。在最坏状况下则需要 $O (n^2)$ 次比较，但这种状况并不常见。事实上，快速排序通常明显比其他 $O (n\log n)$ 算法更快，因为它的内部循环（inner loop）可以在大部分的架构上很有效率地被实现出来。 快速排序的最坏运行情况是 $O">
@@ -389,7 +389,7 @@
                 
               
 
-              <time title="创建时间：2019-09-13 19:10:02 / 修改时间：21:11:34" itemprop="dateCreated datePublished" datetime="2019-09-13T19:10:02+08:00">2019-09-13</time>
+              <time title="创建时间：2019-09-13 19:10:02 / 修改时间：21:14:27" itemprop="dateCreated datePublished" datetime="2019-09-13T19:10:02+08:00">2019-09-13</time>
             
 
             
@@ -449,7 +449,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">4.7k</span>
+                <span title="本文字数">4.5k</span>
               
 
               
@@ -544,9 +544,95 @@
 <p>初始时，<code>i = 0;</code> <code>j = 14;</code> <code>pivot = arr [i] = 3</code>。</p>
 <p>由于已经将 <code>arr [0]</code> 中的数保存到 <code>pivot</code> 中，可以理解成在数组 <code>arr [0]</code> 上挖了个坑，可以将其它数据填充到这来。</p>
 <p>从 <code>j</code> 开始向前找一个比 <code>pivot</code> 小，当 <code>j = 9</code> 时，符合条件，将 <code>arr [9]</code> 挖出再填到上一个坑 <code>arr [0]</code> 中：<code>arr [0] = arr [9];</code> <code>i++;</code> 这样一个坑 <code>arr [0]</code> 就被填上了，但又形成了一个新坑 <code>arr [9]</code>，需要找新的数字填 <code>arr [9]</code> 这个坑。这次从 <code>i</code> 开始向后找一个大于 <code>pivot</code> 的数，当 <code>i = 1</code> 时，符合条件，将 <code>arr [1]</code> 挖出再填到上一个坑中：<code>arr [9] = arr [1];</code> <code>j--;</code> </p>
-<p>数组变为：<br> 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 |<br>—-|—-|—-|—-|—-|—-|—-|—-|—-|—-|—-|—-|—-|—-|—-|—-|<br> <strong>2</strong> | <strong>44</strong> | 38 | 5 | 47 | 15 | 36 | 26 | 27 | 44 | 46 | 4 | 19 | 50 | 48 |</p>
+<p>数组变为：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> <strong>2</strong></td>
+<td><strong>44</strong></td>
+<td>38</td>
+<td>5</td>
+<td>47</td>
+<td>15</td>
+<td>36</td>
+<td>26</td>
+<td>27</td>
+<td>44</td>
+<td>46</td>
+<td>4</td>
+<td>19</td>
+<td>50</td>
+<td>48</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>再重复上面的步骤，先从后向前找，再从前向后找，最后发现，<code>i</code> 和 <code>j</code> 重合了，此时，<code>i = j = 1</code>，令 <code>arr [i] = pivot</code>，一次分区完成。</p>
-<p>数组变为：<br> 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 |<br>—-|—-|—-|—-|—-|—-|—-|—-|—-|—-|—-|—-|—-|—-|—-|—-|<br> 2 | $\color {red}{3}$ | 38 | 5 | 47 | 15 | 36 | 26 | 27 | 44 | 46 | 4 | 19 | 50 | 48 |</p>
+<p>数组变为：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> 2</td>
+<td>$\color {red}{3}$</td>
+<td>38</td>
+<td>5</td>
+<td>47</td>
+<td>15</td>
+<td>36</td>
+<td>26</td>
+<td>27</td>
+<td>44</td>
+<td>46</td>
+<td>4</td>
+<td>19</td>
+<td>50</td>
+<td>48</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>此时，<code>arr [1]</code> 前面的数字都小于它，后面的数字都大于它。再次对分区后的子区间重复上述步骤即可。</p>
 <p><strong>Java 实现 </strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 快速排序，挖坑法 </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] quickSort1 (<span class="keyword">int</span>[] arr) &#123;</span><br><span class="line">    partition1 (arr, <span class="number">0</span>, arr.length - <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">partition1</span><span class="params">(<span class="keyword">int</span> arr [], <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (left &gt; right) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//pivot 为基准值，arr [left] 赋值给 pivot 后，空出来相当于挖了个坑 </span></span><br><span class="line">    <span class="keyword">int</span> pivot = arr [left];</span><br><span class="line">    <span class="keyword">int</span> i = left, j = right;</span><br><span class="line">    <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">        <span class="comment">// 找到小于基准值的 arr [j]</span></span><br><span class="line">        <span class="keyword">while</span> (i &lt; j &amp;&amp; arr [j] &gt;= pivot) &#123;</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; j) &#123;</span><br><span class="line">            <span class="comment">// 挖坑，arr [j] 空出来，相当于挖了个坑 </span></span><br><span class="line">            <span class="comment">// 也可以理解为 arr [i] 挖的坑 arr [j] 填上 </span></span><br><span class="line">            <span class="comment">// 第一次循环时，i = 0，就是基准值所在地 </span></span><br><span class="line">            <span class="comment">// 所以第一个被填上的坑一定是在基准值处挖的坑 </span></span><br><span class="line">            arr [i] = arr [j];</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 找到大于基准值的 arr [i]</span></span><br><span class="line">        <span class="keyword">while</span> (i &lt; j &amp;&amp; arr [i] &lt;= pivot) &#123;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; j) &#123;</span><br><span class="line">            <span class="comment">// 填坑，arr [j] 挖的坑，arr [i] 填上 </span></span><br><span class="line">            <span class="comment">// 也可以理解为 arr [i] 挖了一个坑 </span></span><br><span class="line">            arr [j] = arr [i];</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//i 和 j 相等时，将基准值填到 arr [i]</span></span><br><span class="line">    <span class="comment">// 这时 arr [i] 左边的数字都比它小，右边的数字都比它大 </span></span><br><span class="line">    arr [i] = pivot;</span><br><span class="line">    <span class="comment">// 递归处理左半数组 </span></span><br><span class="line">    partition1 (arr, left, i - <span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 递归处理右半数组 </span></span><br><span class="line">    partition1 (arr, i + <span class="number">1</span>, right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h4 id="交换法"><a href="#交换法" class="headerlink" title="交换法"></a>交换法</h4><p><strong> 交换法的思想：</strong> 用两个指针 <code>i</code> 和 <code>j</code> 分别指向数组的第一个数和最后一个数，选取第一个数为基准数 <code>pivot = arr [0]</code>，首先从 <code>j</code> 所指位置自右向左逐一搜索，找到第一个小于 <code>pivot</code> 的数字，再从 <code>i</code> 所指位置自左向右逐一搜索，找到第一个大于 <code>pivot</code> 的数字，如果此时 <code>i &lt; j</code>，则交换 <code>i</code> 和 <code>j</code> 所指的两个数字，然后继续以上搜索，满足条件时交换，直至 <code>i == j</code> 为止，最后将基准值位置的数字（基准值）与 <code>i</code>, <code>j</code> 相等时所指位置的数字交换，至此一次分区结束。</p>
