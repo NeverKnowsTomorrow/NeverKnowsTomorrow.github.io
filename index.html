@@ -385,7 +385,7 @@
                 
               
 
-              <time title="创建时间：2020-04-01 17:18:36 / 修改时间：18:01:42" itemprop="dateCreated datePublished" datetime="2020-04-01T17:18:36+08:00">2020-04-01</time>
+              <time title="创建时间：2020-04-01 17:18:36 / 修改时间：18:04:41" itemprop="dateCreated datePublished" datetime="2020-04-01T17:18:36+08:00">2020-04-01</time>
             
 
             
@@ -473,43 +473,19 @@
 
       
         
-          
-            <p>最近频繁遇到 IntelliJ IDEA 启动失败的问题，还有启动 TomCat 时 1099 端口占用问题，有时还有 ShadowSocksR 的 1080 端口占用问题。有时重启电脑能够解决问题，但并非总是有效。有时候 IDEA 用的好好的，但是电脑休眠后重新唤醒就打不开 IDEA 了。 TomCat 的 1099 端口占用问题也总是出现，使用 powershell 用以下命令查看端口占用情况，却找不到占用端口的进程。</p>
+          <p>最近频繁遇到 IntelliJ IDEA 启动失败的问题，还有启动 TomCat 时 1099 端口占用问题，有时还有 ShadowSocksR 的 1080 端口占用问题。有时重启电脑能够解决问题，但并非总是有效。有时候 IDEA 用的好好的，但是电脑休眠后重新唤醒就打不开 IDEA 了。 TomCat 的 1099 端口占用问题也总是出现，使用 powershell 用以下命令查看端口占用情况，却找不到占用端口的进程。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -aon | findstr 1099</span><br></pre></td></tr></table></figure>
 <p>查看了 IDEA 的启动日志，应该也是端口占用导致启动失败。Google 搜索到 JetBrains 官方支持社区的一个 <a href="https://intellij-support.jetbrains.com/hc/en-us/community/posts/360004973960-Critical-Internal-Error-on-Startup-of-IntelliJ-IDEA-Cannot-Lock-System-Folders-" target="_blank" rel="noopener">帖子</a>，了解到 IDEA 在启动时，会绑定 <code>6942</code> 到 <code>6991</code> 之间第一个可用的端口，如果无法绑定此范围内的任何端口，则会引发如下图所示异常：</p>
 <p><img src="https://i.loli.net/2020/04/01/R4zHZFlAIrch5Kn.png" alt=""></p>
-<p>有 Docker-for-Windows 的用户也遇到 <a href="https://github.com/docker/for-win/issues/3171" target="_blank" rel="noopener">无法绑定端口的问题</a>，问题出现在 Hyper-V 上面，因为 Docker-for-Windows 需要启用 Hyper-V，而启用 Hyper-V 后，系统会保留一部分范围的端口，其他程序无法使用。如果程序使用了在此范围内的端口，会提示端口被占用，而且通过 <code>netstat</code> 命令也无法找到使用该端口的进程。</p>
-<p>我电脑没开启 Hyper-V，但安装了 WSL2，而 WSL2 引入了真正的 Linux 内核，需要虚拟机平台支持。</p>
-<p>下图是微软 WSL2 安装的教程截图，WSL2 需要虚拟机平台的支持，这里占用端口的应该就是虚拟机平台</p>
-<p><img src="https://i.loli.net/2020/04/01/v5TatuHw3s6plSX.png" alt=""></p>
-<p>通过以下命令可以查看被保留的端口范围：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh interface ipvl4 show excludedportrange protocol=tcp</span><br></pre></td></tr></table></figure></p>
-<p>这个范围是动态的，重启之后可能就会变化。这就是 IDEA 有时能正常启动，有时就会报错的原因。同样 TomCat 和 ShadowSocksR 频繁遇到的端口占用问题，也是这个原因造成的。</p>
-<p>下图中，<code>6942</code> 到 <code>6991</code> 端口都被保留了，所以此时 IDEA 启动失败</p>
-<p><img src="https://i.loli.net/2020/04/01/wiaBD1crj2Svl6J.png" alt=""></p>
-<p>重启后，被保留端口的范围变了，<code>6942</code> 到 <code>6991</code> 不在范围内，IDEA 可以成功启动。但 <code>1080</code> 端口在被保留范围内，尝试开启 SSR，果然遇到了端口占用提示。</p>
-<p><img src="https://i.loli.net/2020/04/01/51XLQzwqfkHaN3e.png" alt=""></p>
-<p><img src="https://i.loli.net/2020/04/01/ZaheX6t8f43WiKv.png" alt=""></p>
-<p><img src="https://i.loli.net/2020/04/01/imvTQwp56Kf2NLX.png" alt=""></p>
-<p>再次尝试重启，<code>6942</code> 到 <code>6952</code> 是可用的，IDEA 可以正常启动</p>
-<p><img src="https://i.loli.net/2020/04/01/42d7PoDutBFUOvr.png" alt=""></p>
-<p><img src="https://i.loli.net/2020/04/01/fZCErdRba1uAi4G.png" alt=""></p>
-<p>1080 端口可用，SSR 设置端口成功：</p>
-<p><img src="https://i.loli.net/2020/04/01/TNFU9ch6bIrlKey.png" alt=""></p>
-<p>找到了问题所在，解决方法也在上面提到的链接中，只需要把我们用到的端口排除在保留端口范围就可以了，用管理员身份启动 powershell，命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh int ipv4 add excludedportrange protocol=tcp startport = 起始端口 numberofports = 端口保留数量 </span><br></pre></td></tr></table></figure>
-<p>执行成功后，会输出确定：</p>
-<p><img src="https://i.loli.net/2020/04/01/Vc9UtaGPq5O4kWs.png" alt=""></p>
-<p>再次查看保留端口范围，可以看到设置过的端口有 * 号标注，程序已经可以调用这些端口了。</p>
-<p><img src="https://i.loli.net/2020/04/01/y3WDAC7BMhgo4dF.png" alt=""></p>
-<p>如果执行命令后提示：“另一个程序正在使用此文件，进程无法访问”，可以尝试关闭 Hyper-V、虚拟机平台、WSL 功能，然后重启后再次尝试。</p>
-<p><img src="https://i.loli.net/2020/04/01/Syve63XIPrb7Blp.png" alt=""></p>
-<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://github.com/docker/for-win/issues/3171" target="_blank" rel="noopener">https://github.com/docker/for-win/issues/3171</a></p>
-<p><a href="https://www.kairlec.com/?p=285" target="_blank" rel="noopener">https://www.kairlec.com/?p=285</a></p>
-<p><a href="https://intellij-support.jetbrains.com/hc/en-us/community/posts/360004973960-Critical-Internal-Error-on-Startup-of-IntelliJ-IDEA-Cannot-Lock-System-Folders-" target="_blank" rel="noopener">https://intellij-support.jetbrains.com/hc/en-us/community/posts/360004973960-Critical-Internal-Error-on-Startup-of-IntelliJ-IDEA-Cannot-Lock-System-Folders-</a></p>
-<p><a href="https://guochunyang.blog.csdn.net/article/details/104522895" target="_blank" rel="noopener">https://guochunyang.blog.csdn.net/article/details/104522895</a></p>
-<p><a href="https://docs.microsoft.com/zh-cn/windows/wsl/wsl2-install" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/windows/wsl/wsl2-install</a></p>
-
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/04/01/port-occupation/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>

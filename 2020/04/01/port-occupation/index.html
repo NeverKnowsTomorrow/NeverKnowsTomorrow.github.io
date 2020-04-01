@@ -137,7 +137,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/04/01/Vc9UtaGPq5O4kWs.png">
 <meta property="og:image" content="https://i.loli.net/2020/04/01/y3WDAC7BMhgo4dF.png">
 <meta property="og:image" content="https://i.loli.net/2020/04/01/Syve63XIPrb7Blp.png">
-<meta property="og:updated_time" content="2020-04-01T10:01:42.081Z">
+<meta property="og:updated_time" content="2020-04-01T10:04:41.254Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记录一次端口占用问题的解决过程">
 <meta name="twitter:description" content="最近频繁遇到 IntelliJ IDEA 启动失败的问题，还有启动 TomCat 时 1099 端口占用问题，有时还有 ShadowSocksR 的 1080 端口占用问题。有时重启电脑能够解决问题，但并非总是有效。有时候 IDEA 用的好好的，但是电脑休眠后重新唤醒就打不开 IDEA 了。 TomCat 的 1099 端口占用问题也总是出现，使用 powershell 用以下命令查看端口占用情况">
@@ -400,7 +400,7 @@
                 
               
 
-              <time title="创建时间：2020-04-01 17:18:36 / 修改时间：18:01:42" itemprop="dateCreated datePublished" datetime="2020-04-01T17:18:36+08:00">2020-04-01</time>
+              <time title="创建时间：2020-04-01 17:18:36 / 修改时间：18:04:41" itemprop="dateCreated datePublished" datetime="2020-04-01T17:18:36+08:00">2020-04-01</time>
             
 
             
@@ -491,6 +491,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -aon | findstr 1099</span><br></pre></td></tr></table></figure>
 <p>查看了 IDEA 的启动日志，应该也是端口占用导致启动失败。Google 搜索到 JetBrains 官方支持社区的一个 <a href="https://intellij-support.jetbrains.com/hc/en-us/community/posts/360004973960-Critical-Internal-Error-on-Startup-of-IntelliJ-IDEA-Cannot-Lock-System-Folders-" target="_blank" rel="noopener">帖子</a>，了解到 IDEA 在启动时，会绑定 <code>6942</code> 到 <code>6991</code> 之间第一个可用的端口，如果无法绑定此范围内的任何端口，则会引发如下图所示异常：</p>
 <p><img src="https://i.loli.net/2020/04/01/R4zHZFlAIrch5Kn.png" alt=""></p>
+<a id="more"></a>
 <p>有 Docker-for-Windows 的用户也遇到 <a href="https://github.com/docker/for-win/issues/3171" target="_blank" rel="noopener">无法绑定端口的问题</a>，问题出现在 Hyper-V 上面，因为 Docker-for-Windows 需要启用 Hyper-V，而启用 Hyper-V 后，系统会保留一部分范围的端口，其他程序无法使用。如果程序使用了在此范围内的端口，会提示端口被占用，而且通过 <code>netstat</code> 命令也无法找到使用该端口的进程。</p>
 <p>我电脑没开启 Hyper-V，但安装了 WSL2，而 WSL2 引入了真正的 Linux 内核，需要虚拟机平台支持。</p>
 <p>下图是微软 WSL2 安装的教程截图，WSL2 需要虚拟机平台的支持，这里占用端口的应该就是虚拟机平台</p>
