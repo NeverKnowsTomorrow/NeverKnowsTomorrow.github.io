@@ -137,7 +137,8 @@
 <meta property="og:image" content="https://i.loli.net/2020/04/01/Vc9UtaGPq5O4kWs.png">
 <meta property="og:image" content="https://i.loli.net/2020/04/01/y3WDAC7BMhgo4dF.png">
 <meta property="og:image" content="https://i.loli.net/2020/04/01/Syve63XIPrb7Blp.png">
-<meta property="og:updated_time" content="2020-04-01T10:04:41.254Z">
+<meta property="og:image" content="https://i.loli.net/2020/04/03/qHNy4ufdjpKMic3.png">
+<meta property="og:updated_time" content="2020-04-03T04:55:30.013Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记录一次端口占用问题的解决过程">
 <meta name="twitter:description" content="最近频繁遇到 IntelliJ IDEA 启动失败的问题，还有启动 TomCat 时 1099 端口占用问题，有时还有 ShadowSocksR 的 1080 端口占用问题。有时重启电脑能够解决问题，但并非总是有效。有时候 IDEA 用的好好的，但是电脑休眠后重新唤醒就打不开 IDEA 了。 TomCat 的 1099 端口占用问题也总是出现，使用 powershell 用以下命令查看端口占用情况">
@@ -400,12 +401,24 @@
                 
               
 
-              <time title="创建时间：2020-04-01 17:18:36 / 修改时间：18:04:41" itemprop="dateCreated datePublished" datetime="2020-04-01T17:18:36+08:00">2020-04-01</time>
+              <time title="创建时间：2020-04-01 17:18:36" itemprop="dateCreated datePublished" datetime="2020-04-01T17:18:36+08:00">2020-04-01</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-04-03 12:55:30" itemprop="dateModified" datetime="2020-04-03T12:55:30+08:00">2020-04-03</time>
               
             
           </span>
@@ -453,7 +466,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.7k</span>
+                <span title="本文字数">1.9k</span>
               
 
               
@@ -517,6 +530,10 @@
 <p><img src="https://i.loli.net/2020/04/01/y3WDAC7BMhgo4dF.png" alt=""></p>
 <p>如果执行命令后提示：“另一个程序正在使用此文件，进程无法访问”，可以尝试关闭 Hyper-V、虚拟机平台、WSL 功能，然后重启后再次尝试。</p>
 <p><img src="https://i.loli.net/2020/04/01/Syve63XIPrb7Blp.png" alt=""></p>
+<h5 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h5><p>今天又遇到了 v2rayN 的 <code>10809</code> 端口占用问题，用前面提到的命令会提示：另一个程序正在使用该文件，如果再关掉 Hyper-V、虚拟机啥的太麻烦了，而且以后遇到新的端口占用还得重复操作一遍。GitHub 上有人提到了 <a href="https://github.com/docker/for-win/issues/3171" target="_blank" rel="noopener">另一种方法</a>，可以重置动态端口的范围：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh int ipv4 set dynamicport tcp start=49152 num=16383</span><br></pre></td></tr></table></figure>
+<p>执行之后重启电脑，再次查看保留端口范围，已经从 <code>49152</code> 开始了：</p>
+<p><img src="https://i.loli.net/2020/04/03/qHNy4ufdjpKMic3.png" alt=""></p>
 <h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://github.com/docker/for-win/issues/3171" target="_blank" rel="noopener">https://github.com/docker/for-win/issues/3171</a></p>
 <p><a href="https://www.kairlec.com/?p=285" target="_blank" rel="noopener">https://www.kairlec.com/?p=285</a></p>
 <p><a href="https://intellij-support.jetbrains.com/hc/en-us/community/posts/360004973960-Critical-Internal-Error-on-Startup-of-IntelliJ-IDEA-Cannot-Lock-System-Folders-" target="_blank" rel="noopener">https://intellij-support.jetbrains.com/hc/en-us/community/posts/360004973960-Critical-Internal-Error-on-Startup-of-IntelliJ-IDEA-Cannot-Lock-System-Folders-</a></p>
@@ -778,7 +795,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#参考链接"><span class="nav-number">1.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#更新"><span class="nav-number">1.</span> <span class="nav-text">更新</span></a></li></ol><li class="nav-item nav-level-4"><a class="nav-link" href="#参考链接"><span class="nav-number"></span> <span class="nav-text">参考链接</span></a></li></div>
             
 
           </div>
