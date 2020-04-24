@@ -138,7 +138,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/04/01/y3WDAC7BMhgo4dF.png">
 <meta property="og:image" content="https://i.loli.net/2020/04/01/Syve63XIPrb7Blp.png">
 <meta property="og:image" content="https://i.loli.net/2020/04/03/qHNy4ufdjpKMic3.png">
-<meta property="og:updated_time" content="2020-04-03T04:55:30.013Z">
+<meta property="og:updated_time" content="2020-04-24T12:51:32.381Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记录一次端口占用问题的解决过程">
 <meta name="twitter:description" content="最近频繁遇到 IntelliJ IDEA 启动失败的问题，还有启动 TomCat 时 1099 端口占用问题，有时还有 ShadowSocksR 的 1080 端口占用问题。有时重启电脑能够解决问题，但并非总是有效。有时候 IDEA 用的好好的，但是电脑休眠后重新唤醒就打不开 IDEA 了。 TomCat 的 1099 端口占用问题也总是出现，使用 powershell 用以下命令查看端口占用情况">
@@ -418,7 +418,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-04-03 12:55:30" itemprop="dateModified" datetime="2020-04-03T12:55:30+08:00">2020-04-03</time>
+                <time title="修改时间：2020-04-24 20:51:32" itemprop="dateModified" datetime="2020-04-24T20:51:32+08:00">2020-04-24</time>
               
             
           </span>
@@ -509,7 +509,7 @@
 <p>我电脑没开启 Hyper-V，但安装了 WSL2，而 WSL2 引入了真正的 Linux 内核，需要虚拟机平台支持。</p>
 <p>下图是微软 WSL2 安装的教程截图，WSL2 需要虚拟机平台的支持，这里占用端口的应该就是虚拟机平台</p>
 <p><img src="https://i.loli.net/2020/04/01/v5TatuHw3s6plSX.png" alt=""></p>
-<p>通过以下命令可以查看被保留的端口范围：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh interface ipvl4 show excludedportrange protocol=tcp</span><br></pre></td></tr></table></figure></p>
+<p>通过以下命令可以查看被保留的端口范围：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh interface ipv4 show excludedportrange protocol=tcp</span><br></pre></td></tr></table></figure></p>
 <p>这个范围是动态的，重启之后可能就会变化。这就是 IDEA 有时能正常启动，有时就会报错的原因。同样 TomCat 和 ShadowSocksR 频繁遇到的端口占用问题，也是这个原因造成的。</p>
 <p>下图中，<code>6942</code> 到 <code>6991</code> 端口都被保留了，所以此时 IDEA 启动失败</p>
 <p><img src="https://i.loli.net/2020/04/01/wiaBD1crj2Svl6J.png" alt=""></p>
