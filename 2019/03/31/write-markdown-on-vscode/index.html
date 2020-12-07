@@ -1,23 +1,514 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_medium.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_small.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block page_class %}page-post-detail{% endblock %}
 
-{% block content %}
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"neverknowstomorrow.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="VS Code (Visual Studio Code) 是微软推出的开源且跨平台的代码编辑器，自 2015 年 4 月 30 日推出以来，发展迅速，至今不到 4 年的时间里，已经成为最流行的编辑器之一。它不仅集成了一款现代编辑器所应该具备的所有特性，还有十分丰富的插件来实现各种功能。截至今日，VS Code 插件商城已有超过 10000 款插件。 当然，我们可以使用 VS Code 来编写 Ma">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 VS Code 写 Markdown 文档">
+<meta property="og:url" content="https://neverknowstomorrow.github.io/2019/03/31/write-markdown-on-vscode/index.html">
+<meta property="og:site_name" content="NeverKnowsTomorrow">
+<meta property="og:description" content="VS Code (Visual Studio Code) 是微软推出的开源且跨平台的代码编辑器，自 2015 年 4 月 30 日推出以来，发展迅速，至今不到 4 年的时间里，已经成为最流行的编辑器之一。它不仅集成了一款现代编辑器所应该具备的所有特性，还有十分丰富的插件来实现各种功能。截至今日，VS Code 插件商城已有超过 10000 款插件。 当然，我们可以使用 VS Code 来编写 Ma">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2019/09/05/gS5b8vryZdGe7qM.jpg">
+<meta property="article:published_time" content="2019-03-31T03:43:22.000Z">
+<meta property="article:modified_time" content="2019-09-05T01:35:45.000Z">
+<meta property="article:author" content="乔少年">
+<meta property="article:tag" content="Tools">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2019/09/05/gS5b8vryZdGe7qM.jpg">
+
+<link rel="canonical" href="https://neverknowstomorrow.github.io/2019/03/31/write-markdown-on-vscode/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>使用 VS Code 写 Markdown 文档 | NeverKnowsTomorrow</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">NeverKnowsTomorrow</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://neverknowstomorrow.github.io/2019/03/31/write-markdown-on-vscode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blue_lotus.jpg">
+      <meta itemprop="name" content="乔少年">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NeverKnowsTomorrow">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用 VS Code 写 Markdown 文档
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-31 11:43:22" itemprop="dateCreated datePublished" datetime="2019-03-31T11:43:22+08:00">2019-03-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-09-05 09:35:45" itemprop="dateModified" datetime="2019-09-05T09:35:45+08:00">2019-09-05</time>
+              </span>
+
+          
+            <span id="/2019/03/31/write-markdown-on-vscode/" class="post-meta-item leancloud_visitors" data-flag-title="使用 VS Code 写 Markdown 文档" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/03/31/write-markdown-on-vscode/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/03/31/write-markdown-on-vscode/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>VS Code (Visual Studio Code) 是微软推出的开源且跨平台的代码编辑器，自 2015 年 4 月 30 日推出以来，发展迅速，至今不到 4 年的时间里，已经成为最流行的编辑器之一。它不仅集成了一款现代编辑器所应该具备的所有特性，还有十分丰富的插件来实现各种功能。截至今日，VS Code 插件商城已有超过 10000 款插件。<br><img src="https://i.loli.net/2019/09/05/gS5b8vryZdGe7qM.jpg" alt=""></p>
+<p>当然，我们可以使用 VS Code 来编写 Markdown 文档，这里推荐几个好用强大的 Markdown 插件。</p>
+<a id="more"></a>
+<h4 id="1-Markdown-All-in-One"><a href="#1-Markdown-All-in-One" class="headerlink" title="1. Markdown All in One"></a>1. <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one">Markdown All in One</a></h4><p>功能强大的 Markdown 插件，支持丰富的 Markdown 语法，对 LaTex 语法也有很好的支持，同时支持快捷键。可以在侧边栏打开预览，你可以在编辑的同时看到渲染之后的 Markdown 效果。</p>
+<h4 id="2-Markdown-Preview-Enhanced"><a href="#2-Markdown-Preview-Enhanced" class="headerlink" title="2. Markdown Preview Enhanced"></a>2. <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced">Markdown Preview Enhanced</a></h4><p>增强版的 Markdown 预览插件，功能十分强大，几乎支持所有的 Markdown 语法渲染，支持导出为 <code>HTML</code>、<code>PDF</code>、<code>PNG</code>、<code>JPEG</code>、电子书（<code>ePub</code>、<code>mobi</code>、<code>PDF</code>、<code>HTML</code>）、<code>Pandoc</code> 等等格式的文件；</p>
+<p>Markdown Preview Enhanced 使用 <a target="_blank" rel="noopener" href="https://github.com/KaTeX/KaTeX"><code>KaTeX</code></a> 或者 <a target="_blank" rel="noopener" href="https://github.com/mathjax/MathJax"><code>MathJax</code></a> 来渲染数学表达式。</p>
+<p>Markdown Preview Enhanced 内部支持 <code>flow charts</code>, <code>sequence diagrams</code>, <code>mermaid</code>, <code>PlantUML</code>, <code>WaveDrom</code>, <code>GraphViz</code>，<code>Vega</code> &amp; <code>Vega-lite，Ditaa</code> 图像渲染。 你也可以通过使用 <a target="_blank" rel="noopener" href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn/code-chunk"><code>Code Chunk</code></a> 来渲染 <code>TikZ</code>, <code>Python</code> <code>Matplotlib</code>, <code>Plotly</code> 等图像。</p>
+<p>你甚至可以用它做出漂亮的幻灯片，Markdown Preview Enhanced 使用 <a target="_blank" rel="noopener" href="https://github.com/hakimel/reveal.js"><code>reveal.js</code></a> 来渲染漂亮的幻灯片。</p>
+<p>详细功能请移步 <a target="_blank" rel="noopener" href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn">官方文档</a>。</p>
+<h4 id="3-Markdown-Shortcuts"><a href="#3-Markdown-Shortcuts" class="headerlink" title="3. Markdown Shortcuts"></a>3. <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=mdickin.markdown-shortcuts">Markdown Shortcuts</a></h4><p>Markdown 编辑的快捷键插件，对 <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one">Markdown All in One</a> 的快捷键做了补充和增强。</p>
+<h4 id="4-Pangu-Markdown"><a href="#4-Pangu-Markdown" class="headerlink" title="4. Pangu-Markdown"></a>4. <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=xlthu.Pangu-Markdown">Pangu-Markdown</a></h4><p>如果你是中英文空格强迫症患者，这款插件就是你的福音！它实现了在 Markdown 文件的中英文之间自动添加空格，可以设置保存文件时自动添加空格。这样你就可以在写 Markdown 文档时，按一下 <code>Ctrl + S</code> 实现自动添加空格，强迫症必备！</p>
+<p>这款插件的功能支持来自于 GitHub 上的一个开源项目 <a target="_blank" rel="noopener" href="https://github.com/vinta/pangu.js">pangu.js</a>，作者是中英文空格强迫症重症患者，借助于此，你可以实现在 <a href="https://neverknowstomorrow.github.io/2019/03/31/Chinese-English-Space/">Hexo 博客中英文之间添加空格</a>。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>乔少年
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://neverknowstomorrow.github.io/2019/03/31/write-markdown-on-vscode/" title="使用 VS Code 写 Markdown 文档">https://neverknowstomorrow.github.io/2019/03/31/write-markdown-on-vscode/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Tools/" rel="tag"># Tools</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/03/31/Chinese-English-Space/" rel="prev" title="Hexo 博客中英文添加空格">
+      <i class="fa fa-chevron-left"></i> Hexo 博客中英文添加空格
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/01/BinarySearch/" rel="next" title="用循环不变式理解并写出正确的二分查找算法">
+      用循环不变式理解并写出正确的二分查找算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Markdown-All-in-One"><span class="nav-number">1.</span> <span class="nav-text">1. Markdown All in One</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Markdown-Preview-Enhanced"><span class="nav-number">2.</span> <span class="nav-text">2. Markdown Preview Enhanced</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Markdown-Shortcuts"><span class="nav-number">3.</span> <span class="nav-text">3. Markdown Shortcuts</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Pangu-Markdown"><span class="nav-number">4.</span> <span class="nav-text">4. Pangu-Markdown</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="乔少年"
+      src="/images/blue_lotus.jpg">
+  <p class="site-author-name" itemprop="name">乔少年</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">乔少年</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">98k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:29</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'O9D1INVdLd3zjni6P4Mq4x7d-gzGzoHsz',
+      appKey     : 'z6rXhsNFtcvDmeqiGIpsPgQc',
+      placeholder: "欢迎留言交流 ~",
+      avatar     : 'retro',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

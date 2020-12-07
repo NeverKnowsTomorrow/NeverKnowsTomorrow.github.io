@@ -1,23 +1,558 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_medium.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_small.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block page_class %}page-post-detail{% endblock %}
 
-{% block content %}
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"neverknowstomorrow.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="软件简介win10 应用商店有一款很棒的 ssh 客户端软件：Token2Shell&#x2F;MD，是一款 UWP 软件。我曾在几年前它限免的时候安装过，其实当时还不知道是干什么用的。现在它是我的主力 ssh 软件，简洁美观，轻量快速，功能强大。 现在这款软件名字改成了 Token2Shell，而且并不是在 Token2Shell&#x2F;MD 基础上的更新，而是一个新软件，意味着我并不能从 Token2She">
+<meta property="og:type" content="article">
+<meta property="og:title" content="win10 UWP ssh 客户端 Token2Shell&#x2F;MD 简介">
+<meta property="og:url" content="https://neverknowstomorrow.github.io/2019/04/08/Token2Shell/index.html">
+<meta property="og:site_name" content="NeverKnowsTomorrow">
+<meta property="og:description" content="软件简介win10 应用商店有一款很棒的 ssh 客户端软件：Token2Shell&#x2F;MD，是一款 UWP 软件。我曾在几年前它限免的时候安装过，其实当时还不知道是干什么用的。现在它是我的主力 ssh 软件，简洁美观，轻量快速，功能强大。 现在这款软件名字改成了 Token2Shell，而且并不是在 Token2Shell&#x2F;MD 基础上的更新，而是一个新软件，意味着我并不能从 Token2She">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2019/09/05/CW7GeimyoQd4Mq8.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/09/05/wEKjbX9BOygdSNI.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/09/05/WCUmH2Jysa4dbMe.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/09/05/keoIwR3CVTEmzQ4.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/05/45vAcow3JXrZxDl.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/05/5Lzi8oseFGSAbmk.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/05/NaWtJipMsk1g4yO.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/05/6Y54Qo9yOdBaKbu.png">
+<meta property="og:image" content="https://i.loli.net/2019/09/05/OtMlIfBZHmnUN2k.png">
+<meta property="article:published_time" content="2019-04-08T14:33:18.000Z">
+<meta property="article:modified_time" content="2019-09-05T01:34:54.000Z">
+<meta property="article:author" content="乔少年">
+<meta property="article:tag" content="Tools">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2019/09/05/CW7GeimyoQd4Mq8.jpg">
+
+<link rel="canonical" href="https://neverknowstomorrow.github.io/2019/04/08/Token2Shell/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>win10 UWP ssh 客户端 Token2Shell/MD 简介 | NeverKnowsTomorrow</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">NeverKnowsTomorrow</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://neverknowstomorrow.github.io/2019/04/08/Token2Shell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blue_lotus.jpg">
+      <meta itemprop="name" content="乔少年">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NeverKnowsTomorrow">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          win10 UWP ssh 客户端 Token2Shell/MD 简介
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-08 22:33:18" itemprop="dateCreated datePublished" datetime="2019-04-08T22:33:18+08:00">2019-04-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-09-05 09:34:54" itemprop="dateModified" datetime="2019-09-05T09:34:54+08:00">2019-09-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OneNote-%E7%AC%94%E8%AE%B0%E6%90%AC%E8%BF%90%E8%AE%A1%E5%88%92/" itemprop="url" rel="index"><span itemprop="name">OneNote 笔记搬运计划</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/04/08/Token2Shell/" class="post-meta-item leancloud_visitors" data-flag-title="win10 UWP ssh 客户端 Token2Shell/MD 简介" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/04/08/Token2Shell/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/04/08/Token2Shell/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://i.loli.net/2019/09/05/CW7GeimyoQd4Mq8.jpg" alt=""></p>
+<h2 id="软件简介"><a href="#软件简介" class="headerlink" title="软件简介"></a>软件简介</h2><p>win10 应用商店有一款很棒的 <code>ssh</code> 客户端软件：Token2Shell/MD，是一款 UWP 软件。我曾在几年前它限免的时候安装过，其实当时还不知道是干什么用的。现在它是我的主力 <code>ssh</code> 软件，简洁美观，轻量快速，功能强大。</p>
+<p>现在这款软件名字改成了 Token2Shell，而且并不是在 Token2Shell/MD 基础上的更新，而是一个新软件，意味着我并不能从 Token2Shell/MD 更新到这个新版本，想要获得这个软件还需要重新购买。</p>
+<a id="more"></a>
+<p>官方对此的解释是：</p>
+<blockquote>
+<p>In order to add more advanced features, we have upgraded our Windows developer account and released a new app that’s simply named Token2Shell. But, due to the limitations of Microsoft Store, the new app cannot be delivered automatically to the current owners of Token2Shell/MD and it also requires a new purchase.</p>
+</blockquote>
+<p>大概意思是他们升级了 Windows 开发者账户，并发布了新版本，但由于微软商店的限制，新版本不能自动分发到当前 Token2Shell/MD 拥有者的账户，因此想要获取新版本，需要重新购买。不知道到底是谁的锅，为此不少 Token2Shell/MD 用户在新软件底下差评。实际上这款软件是很棒的，也提供试用，大家可以体验一下。旧版的软件已经在商店下架了，但我通过抓包软件获取了它的安装包，在 <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1KcUTl1Hom508PPzSFyWBtg">这里</a> 提供给大家试用，如果喜欢请在商店购买正版，可以获取官方的更新支持。</p>
+<h2 id="功能介绍"><a href="#功能介绍" class="headerlink" title="功能介绍"></a>功能介绍</h2><p>扯远了，下面介绍一下这个软件。实际上它不仅仅是一个 <code>ssh</code> 客户端，它支持 <code>SSH2</code>, <code>TELNET</code>, <code>TCP Direct</code>, <code>Docker</code>, <code>Serial</code>, <code>Bluetooth/RFCOMM</code>，功能十分强大。</p>
+<p>很硬核的界面，它支持终端的多种主题，语法高亮效果很棒，配合 UWP 风格的 UI，看起来赏心悦目：</p>
+<p><img src="https://i.loli.net/2019/09/05/wEKjbX9BOygdSNI.jpg" alt=""></p>
+<p><img src="https://i.loli.net/2019/09/05/WCUmH2Jysa4dbMe.jpg" alt=""></p>
+<p>可以通过 <code>quick connect</code> 快速建立 <code>ssh</code> 连接：</p>
+<p><img src="https://i.loli.net/2019/09/05/keoIwR3CVTEmzQ4.png" alt="image.png"></p>
+<p>可以在地址栏中保存链接，点击即可快速连接远程主机：</p>
+<p><img src="https://i.loli.net/2019/09/05/45vAcow3JXrZxDl.png" alt="image.png"></p>
+<p><code>htop</code>（进程可视化显示工具）在 Token2Shell/MD 中的显示效果：</p>
+<p><img src="https://i.loli.net/2019/09/05/5Lzi8oseFGSAbmk.png" alt="image.png"></p>
+<p>支持 <code>SSH</code> 的 <code>X11 Forwarding</code> 功能，配合本地的 X11 软件，实现通过 <code>SSH</code> 运行远程主机的 GUI 程序：</p>
+<p><img src="https://i.loli.net/2019/09/05/NaWtJipMsk1g4yO.png" alt="image.png"></p>
+<h2 id="连接本地虚拟机"><a href="#连接本地虚拟机" class="headerlink" title="连接本地虚拟机"></a>连接本地虚拟机</h2><p>你可以用 Token2Shell 远程管理你的 Unix 或 Linux 主机，如果你想用它连接本地的虚拟机，需要一些技巧。</p>
+<p>由于 UWP 的安全机制，应用默认不能使用 IP 环回地址进行进程间通信，如果你直接使用 Token2Shell 连接本地的虚拟机，可能会遇到如下连接超时问题：</p>
+<p><img src="https://i.loli.net/2019/09/05/6Y54Qo9yOdBaKbu.png" alt="image.png"></p>
+<p>对于一些虚拟机软件（如 Hyper-V），<a target="_blank" rel="noopener" href="https://choung.net/howto/token2shell-md/accessing-loopback/">添加 Token2Shell/MD 到 Windows loopback 免除列表</a>，就可访问虚拟机了，但对于其他虚拟机软件（如 Virtual Box），你可能需要采用其他措施。</p>
+<p><strong> 第一种方法 </strong> 是使用 Windows 内置的 <code>netsh</code> 命令创建网络流量代理 <code>socket</code>。举个例子，假设你的虚拟机 IP 地址是 <code>192.168.56.101</code>，你想用 <code>22</code> 端口连接它的 <code>ssh server</code>，可以运行如下 <code>netsh</code> 命令行（管理员身份）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh interface portproxy add v4tov4 listenaddress=localhost listenport=22 connectaddress=192.168.56.101 connectport=22 protocol=tcp</span><br></pre></td></tr></table></figure>
+<p>命令完成之后，你可以通过连接 <code>localhost</code> 的 <code>22</code> 端口，连接虚拟机。你也可以更改虚拟机 <code>ssh</code> 的监听端口，防止在存在多个虚拟机时出现端口占用。</p>
+<p>注意，<code>netsh</code> 添加的这个条目，重启系统时也不会删除，你需要使用 <code>netsh</code> 的 <code>delete</code> 命令删除它：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh interface portproxy delete v4tov4 listenaddress=localhost listenport=22</span><br></pre></td></tr></table></figure>
+<p>可以使用 <code>show</code> 命令，显示当前活动的 <code>portproxy</code>（端口代理）设置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh interface portproxy show all</span><br></pre></td></tr></table></figure>
+<p><strong> 第二种方法 </strong>，可以使用 <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1geNXFB9">enableloopbackutility.exe</a> 这款软件来实现上述功能。</p>
+<p><img src="https://i.loli.net/2019/09/05/OtMlIfBZHmnUN2k.png" alt="image.png"></p>
+<ol>
+<li>勾选 Token2Shell/MD, 点击 Save Changes</li>
+<li><code>ssh</code> 登陆虚拟机时，使用 <code>127.0.0.1</code> 本机地址：<code>ssh username@127.0.0.1</code><br>也可以使用虚拟机软件的端口映射功能，将虚拟机的 <code>22</code> 号端口映射到主机的某个端口，例如 <code>10000</code>，在登陆的时候使用：<code>ssh -p 10000 username@127.0.0.1</code> 指定端口登陆虚拟机</li>
+</ol>
+<p>另外，由于上面所述原因，UWP 软件默认无法使用 <code>ss</code> 代理科学上网，你可以用 <code>enableloopbackutility.exe</code> 勾选这些软件实现科学上网。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>乔少年
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://neverknowstomorrow.github.io/2019/04/08/Token2Shell/" title="win10 UWP ssh 客户端 Token2Shell/MD 简介">https://neverknowstomorrow.github.io/2019/04/08/Token2Shell/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Tools/" rel="tag"># Tools</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/04/01/BinarySearch/" rel="prev" title="用循环不变式理解并写出正确的二分查找算法">
+      <i class="fa fa-chevron-left"></i> 用循环不变式理解并写出正确的二分查找算法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/04/15/HashSet/" rel="next" title="HashSet 保证元素唯一性的原理">
+      HashSet 保证元素唯一性的原理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">软件简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">功能介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%9C%AC%E5%9C%B0%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">3.</span> <span class="nav-text">连接本地虚拟机</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="乔少年"
+      src="/images/blue_lotus.jpg">
+  <p class="site-author-name" itemprop="name">乔少年</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">乔少年</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">98k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:29</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'O9D1INVdLd3zjni6P4Mq4x7d-gzGzoHsz',
+      appKey     : 'z6rXhsNFtcvDmeqiGIpsPgQc',
+      placeholder: "欢迎留言交流 ~",
+      avatar     : 'retro',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

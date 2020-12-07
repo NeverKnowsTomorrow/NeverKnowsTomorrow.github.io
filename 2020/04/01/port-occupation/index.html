@@ -1,23 +1,553 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_medium.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_small.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block page_class %}page-post-detail{% endblock %}
 
-{% block content %}
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"neverknowstomorrow.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="最近频繁遇到 IntelliJ IDEA 启动失败的问题，还有启动 TomCat 时 1099 端口占用问题，有时还有 ShadowSocksR 的 1080 端口占用问题。有时重启电脑能够解决问题，但并非总是有效。有时候 IDEA 用的好好的，但是电脑休眠后重新唤醒就打不开 IDEA 了。 TomCat 的 1099 端口占用问题也总是出现，使用 powershell 用以下命令查看端口占用情况">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录一次端口占用问题的解决过程">
+<meta property="og:url" content="https://neverknowstomorrow.github.io/2020/04/01/port-occupation/index.html">
+<meta property="og:site_name" content="NeverKnowsTomorrow">
+<meta property="og:description" content="最近频繁遇到 IntelliJ IDEA 启动失败的问题，还有启动 TomCat 时 1099 端口占用问题，有时还有 ShadowSocksR 的 1080 端口占用问题。有时重启电脑能够解决问题，但并非总是有效。有时候 IDEA 用的好好的，但是电脑休眠后重新唤醒就打不开 IDEA 了。 TomCat 的 1099 端口占用问题也总是出现，使用 powershell 用以下命令查看端口占用情况">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/04/01/R4zHZFlAIrch5Kn.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/01/v5TatuHw3s6plSX.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/01/wiaBD1crj2Svl6J.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/01/51XLQzwqfkHaN3e.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/01/ZaheX6t8f43WiKv.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/01/imvTQwp56Kf2NLX.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/01/42d7PoDutBFUOvr.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/01/fZCErdRba1uAi4G.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/01/TNFU9ch6bIrlKey.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/01/Vc9UtaGPq5O4kWs.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/01/y3WDAC7BMhgo4dF.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/01/Syve63XIPrb7Blp.png">
+<meta property="og:image" content="https://i.loli.net/2020/04/03/qHNy4ufdjpKMic3.png">
+<meta property="article:published_time" content="2020-04-01T09:18:36.000Z">
+<meta property="article:modified_time" content="2020-04-24T12:51:32.381Z">
+<meta property="article:author" content="乔少年">
+<meta property="article:tag" content="Solution">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/04/01/R4zHZFlAIrch5Kn.png">
+
+<link rel="canonical" href="https://neverknowstomorrow.github.io/2020/04/01/port-occupation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>记录一次端口占用问题的解决过程 | NeverKnowsTomorrow</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">NeverKnowsTomorrow</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://neverknowstomorrow.github.io/2020/04/01/port-occupation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blue_lotus.jpg">
+      <meta itemprop="name" content="乔少年">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NeverKnowsTomorrow">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          记录一次端口占用问题的解决过程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-01 17:18:36" itemprop="dateCreated datePublished" datetime="2020-04-01T17:18:36+08:00">2020-04-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-24 20:51:32" itemprop="dateModified" datetime="2020-04-24T20:51:32+08:00">2020-04-24</time>
+              </span>
+
+          
+            <span id="/2020/04/01/port-occupation/" class="post-meta-item leancloud_visitors" data-flag-title="记录一次端口占用问题的解决过程" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/04/01/port-occupation/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/01/port-occupation/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近频繁遇到 IntelliJ IDEA 启动失败的问题，还有启动 TomCat 时 1099 端口占用问题，有时还有 ShadowSocksR 的 1080 端口占用问题。有时重启电脑能够解决问题，但并非总是有效。有时候 IDEA 用的好好的，但是电脑休眠后重新唤醒就打不开 IDEA 了。 TomCat 的 1099 端口占用问题也总是出现，使用 powershell 用以下命令查看端口占用情况，却找不到占用端口的进程。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -aon | findstr 1099</span><br></pre></td></tr></table></figure>
+<p>查看了 IDEA 的启动日志，应该也是端口占用导致启动失败。Google 搜索到 JetBrains 官方支持社区的一个 <a target="_blank" rel="noopener" href="https://intellij-support.jetbrains.com/hc/en-us/community/posts/360004973960-Critical-Internal-Error-on-Startup-of-IntelliJ-IDEA-Cannot-Lock-System-Folders-">帖子</a>，了解到 IDEA 在启动时，会绑定 <code>6942</code> 到 <code>6991</code> 之间第一个可用的端口，如果无法绑定此范围内的任何端口，则会引发如下图所示异常：</p>
+<p><img src="https://i.loli.net/2020/04/01/R4zHZFlAIrch5Kn.png" alt=""></p>
+<a id="more"></a>
+<p>有 Docker-for-Windows 的用户也遇到 <a target="_blank" rel="noopener" href="https://github.com/docker/for-win/issues/3171">无法绑定端口的问题</a>，问题出现在 Hyper-V 上面，因为 Docker-for-Windows 需要启用 Hyper-V，而启用 Hyper-V 后，系统会保留一部分范围的端口，其他程序无法使用。如果程序使用了在此范围内的端口，会提示端口被占用，而且通过 <code>netstat</code> 命令也无法找到使用该端口的进程。</p>
+<p>我电脑没开启 Hyper-V，但安装了 WSL2，而 WSL2 引入了真正的 Linux 内核，需要虚拟机平台支持。</p>
+<p>下图是微软 WSL2 安装的教程截图，WSL2 需要虚拟机平台的支持，这里占用端口的应该就是虚拟机平台</p>
+<p><img src="https://i.loli.net/2020/04/01/v5TatuHw3s6plSX.png" alt=""></p>
+<p>通过以下命令可以查看被保留的端口范围：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh interface ipv4 show excludedportrange protocol=tcp</span><br></pre></td></tr></table></figure></p>
+<p>这个范围是动态的，重启之后可能就会变化。这就是 IDEA 有时能正常启动，有时就会报错的原因。同样 TomCat 和 ShadowSocksR 频繁遇到的端口占用问题，也是这个原因造成的。</p>
+<p>下图中，<code>6942</code> 到 <code>6991</code> 端口都被保留了，所以此时 IDEA 启动失败</p>
+<p><img src="https://i.loli.net/2020/04/01/wiaBD1crj2Svl6J.png" alt=""></p>
+<p>重启后，被保留端口的范围变了，<code>6942</code> 到 <code>6991</code> 不在范围内，IDEA 可以成功启动。但 <code>1080</code> 端口在被保留范围内，尝试开启 SSR，果然遇到了端口占用提示。</p>
+<p><img src="https://i.loli.net/2020/04/01/51XLQzwqfkHaN3e.png" alt=""></p>
+<p><img src="https://i.loli.net/2020/04/01/ZaheX6t8f43WiKv.png" alt=""></p>
+<p><img src="https://i.loli.net/2020/04/01/imvTQwp56Kf2NLX.png" alt=""></p>
+<p>再次尝试重启，<code>6942</code> 到 <code>6952</code> 是可用的，IDEA 可以正常启动</p>
+<p><img src="https://i.loli.net/2020/04/01/42d7PoDutBFUOvr.png" alt=""></p>
+<p><img src="https://i.loli.net/2020/04/01/fZCErdRba1uAi4G.png" alt=""></p>
+<p>1080 端口可用，SSR 设置端口成功：</p>
+<p><img src="https://i.loli.net/2020/04/01/TNFU9ch6bIrlKey.png" alt=""></p>
+<p>找到了问题所在，解决方法也在上面提到的链接中，只需要把我们用到的端口排除在保留端口范围就可以了，用管理员身份启动 powershell，命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh int ipv4 add excludedportrange protocol=tcp startport = 起始端口 numberofports = 端口保留数量 </span><br></pre></td></tr></table></figure>
+<p>执行成功后，会输出确定：</p>
+<p><img src="https://i.loli.net/2020/04/01/Vc9UtaGPq5O4kWs.png" alt=""></p>
+<p>再次查看保留端口范围，可以看到设置过的端口有 * 号标注，程序已经可以调用这些端口了。</p>
+<p><img src="https://i.loli.net/2020/04/01/y3WDAC7BMhgo4dF.png" alt=""></p>
+<p>如果执行命令后提示：“另一个程序正在使用此文件，进程无法访问”，可以尝试关闭 Hyper-V、虚拟机平台、WSL 功能，然后重启后再次尝试。</p>
+<p><img src="https://i.loli.net/2020/04/01/Syve63XIPrb7Blp.png" alt=""></p>
+<h5 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h5><p>今天又遇到了 v2rayN 的 <code>10809</code> 端口占用问题，用前面提到的命令会提示：另一个程序正在使用该文件，如果再关掉 Hyper-V、虚拟机啥的太麻烦了，而且以后遇到新的端口占用还得重复操作一遍。GitHub 上有人提到了 <a target="_blank" rel="noopener" href="https://github.com/docker/for-win/issues/3171">另一种方法</a>，可以重置动态端口的范围：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh int ipv4 set dynamicport tcp start=49152 num=16383</span><br></pre></td></tr></table></figure>
+<p>执行之后重启电脑，再次查看保留端口范围，已经从 <code>49152</code> 开始了：</p>
+<p><img src="https://i.loli.net/2020/04/03/qHNy4ufdjpKMic3.png" alt=""></p>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a target="_blank" rel="noopener" href="https://github.com/docker/for-win/issues/3171">https://github.com/docker/for-win/issues/3171</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.kairlec.com/?p=285">https://www.kairlec.com/?p=285</a></p>
+<p><a target="_blank" rel="noopener" href="https://intellij-support.jetbrains.com/hc/en-us/community/posts/360004973960-Critical-Internal-Error-on-Startup-of-IntelliJ-IDEA-Cannot-Lock-System-Folders-">https://intellij-support.jetbrains.com/hc/en-us/community/posts/360004973960-Critical-Internal-Error-on-Startup-of-IntelliJ-IDEA-Cannot-Lock-System-Folders-</a></p>
+<p><a target="_blank" rel="noopener" href="https://guochunyang.blog.csdn.net/article/details/104522895">https://guochunyang.blog.csdn.net/article/details/104522895</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/wsl/wsl2-install">https://docs.microsoft.com/zh-cn/windows/wsl/wsl2-install</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>乔少年
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://neverknowstomorrow.github.io/2020/04/01/port-occupation/" title="记录一次端口占用问题的解决过程">https://neverknowstomorrow.github.io/2020/04/01/port-occupation/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Solution/" rel="tag"># Solution</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/09/13/quick-sort/" rel="prev" title="快速排序的两种写法：挖坑法和交换法">
+      <i class="fa fa-chevron-left"></i> 快速排序的两种写法：挖坑法和交换法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/03/Z500-change-wireless-network-card/" rel="next" title="联想 Z500 笔记本刷 BIOS 白名单并更换无线网卡">
+      联想 Z500 笔记本刷 BIOS 白名单并更换无线网卡 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0"><span class="nav-number">1.</span> <span class="nav-text">更新</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number"></span> <span class="nav-text">参考链接</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="乔少年"
+      src="/images/blue_lotus.jpg">
+  <p class="site-author-name" itemprop="name">乔少年</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">乔少年</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">98k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:29</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'O9D1INVdLd3zjni6P4Mq4x7d-gzGzoHsz',
+      appKey     : 'z6rXhsNFtcvDmeqiGIpsPgQc',
+      placeholder: "欢迎留言交流 ~",
+      avatar     : 'retro',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
